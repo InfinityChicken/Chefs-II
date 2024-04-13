@@ -1,10 +1,11 @@
 #include "main.h";
 
-extern const int leftFront;
-extern const int leftMid;
-extern const int leftBack;
-extern const int rightFront;
-extern const int rightMid;
-extern const int rightBack;
+//ports are arbitrary, just make sure that the signs stay the same
+extern const int8_t leftFront = 1;
+extern const int8_t leftMid = 2;
+extern const int8_t leftBack = 3;
+extern const int8_t rightFront = -4;
+extern const int8_t rightMid = -5;
+extern const int8_t rightBack = -6;
 
-extern std::shared_ptr<
+extern std::shared_ptr<okapi::ChassisController> drivetrain;
