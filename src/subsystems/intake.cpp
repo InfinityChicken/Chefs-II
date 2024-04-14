@@ -1,8 +1,4 @@
-#include "include/subsystems/intake.hpp"
-
-okapi::Motor intake = okapi::Motor(7);
-okapi::ControllerButton l1 = okapi::ControllerButton(okapi::ControllerDigital::L1, false); //I FIGURED OUT HOW TO USE THE :: THING I DESERVE A STANDING OVATION
-int8_t intakeState;
+#include "subsystems/intake.hpp"
 
 void intakeStep(okapi::Motor motor, int &intakeState) {
     intakeState++;
