@@ -1,6 +1,6 @@
 #include "main.h"
-#include "subsystems/drivetrain.cpp"
-#include "subsystems/intake.cpp"
+#include "subsystems/drivetrain.hpp"
+#include "subsystems/intake.hpp"
 using namespace okapi::literals;
 
 /**
@@ -83,11 +83,6 @@ void opcontrol() {
 	int intakeState = 0;
 
 	while(true) {
-		double speed = controller.getAnalog(okapi::ControllerAnalog::leftY); //left joystick
-		double rotate = controller.getAnalog(okapi::ControllerAnalog::rightX); //right joystick
-		
-		drivetrain->getModel()->arcade(speed, rotate); //drive power
-
 		drive(controller, drivetrain);
 
 		if (l1.changed() == true) {

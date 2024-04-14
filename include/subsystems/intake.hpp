@@ -1,11 +1,10 @@
-#ifndef INTAKE_HPP
-#define INTAKE_HPP
+#ifndef INTAKE
+#define INTAKE
 
 #include "main.h"
 
-okapi::Motor intake(7);
-okapi::ControllerButton l1 = okapi::ControllerButton(okapi::ControllerDigital::L1, false); //I FIGURED OUT HOW TO USE THE :: THING I DESERVE A STANDING OVATION
-int intakeState;
+extern okapi::Motor intake;
+extern okapi::ControllerButton l1;
 
 void intakeStep(okapi::Motor motor, int &intakeState);
 

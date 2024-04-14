@@ -1,12 +1,12 @@
 #include "subsystems/drivetrain.hpp"
 using namespace okapi::literals;
 
-okapi::Motor leftFront(1);
-okapi::Motor leftMid(2);
-okapi::Motor leftBack(3);
-okapi::Motor rightFront(-4);
-okapi::Motor rightMid(-5);
-okapi::Motor rightBack(-6);
+okapi::Motor leftFront = okapi::Motor(1);
+okapi::Motor leftMid = okapi::Motor(2);
+okapi::Motor leftBack = okapi::Motor(3);
+okapi::Motor rightFront = okapi::Motor(-4);
+okapi::Motor rightMid = okapi::Motor(-5);
+okapi::Motor rightBack = okapi::Motor(-6);
 
 std::shared_ptr<okapi::ChassisController> drivetrain = okapi::ChassisControllerBuilder()
 .withMotors({leftBack, leftMid, leftFront}, {rightBack, rightMid, rightFront})
