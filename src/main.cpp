@@ -1,6 +1,7 @@
 #include "main.h"
 #include "subsystems/drivetrain.hpp"
 #include "subsystems/intake.hpp"
+#include "subsystems/slapper.hpp"
 using namespace okapi::literals;
 
 /**
@@ -81,13 +82,17 @@ void opcontrol() {
 	okapi::Controller controller;
 	okapi::Rate rate;
 	int intakeState = 0;
+	int slapperState = 0;
+	bool driveDisabled = false;
 
 	while(true) {
-		drive(controller, drivetrain);
-
-		if (l1.changed() == true) {
-			intakeStep(intake, intakeState);
+		if(driveDisabled != true) { //if driver hijacks drive inputs for something else drive is deactivated
+			drive(controller, drivetrain);
 		}
+		
+		intakeStep(intake, intakeState);
+
+		slapperStep(slapper, slapperState, r1, driveDisabled, controller);
 
 		rate.delay(100_Hz);
 	}
