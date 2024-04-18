@@ -7,6 +7,6 @@ extern okapi::Motor intake;
 extern okapi::ControllerButton l1;
 extern okapi::ControllerButton l2;
 
-void intake(okapi::Motor motor, okapi::ControllerButton l1, okapi::ControllerButton l2, bool &hold);
+void intakeStep(okapi::Motor motor, okapi::ControllerButton l1, okapi::ControllerButton l2, bool &hold);
 
 #endif
