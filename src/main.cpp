@@ -2,6 +2,7 @@
 #include "subsystems/drivetrain.hpp"
 #include "subsystems/intake.hpp"
 #include "subsystems/slapper.hpp"
+#include "subsystems/messaging.hpp"
 using namespace okapi::literals;
 
 /**
@@ -79,21 +80,24 @@ void autonomous() {}
  */
 
 void opcontrol() {
+	okapi::Motor motors[] = {leftFront, leftMid, leftBack, rightMid, rightBack, rightFront, intake}; //TODO: add slapper once i get that code
 	okapi::Controller controller;
 	okapi::Rate rate;
 	int intakeState = 0;
 	int slapperState = 0;
 	bool driveDisabled = false;
+	bool hold = false;
 
 	while(true) {
 		if(driveDisabled != true) { //if driver hijacks drive inputs for something else drive is deactivated
 			drive(controller, drivetrain);
 		}
-		
-		intakeStep(intake, intakeState);
+		intakeStep(intake, l1, l2, hold);
 
 		slapperStep(slapper, slapperState, r1, driveDisabled, controller);
 
+		overheat(motors, controller);
+		
 		rate.delay(100_Hz);
 	}
 }
