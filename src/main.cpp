@@ -1,6 +1,7 @@
 #include "main.h"
 #include "subsystems/drivetrain.hpp"
 #include "subsystems/intake.hpp"
+#include "subsystems/messaging.hpp"
 using namespace okapi::literals;
 
 /**
@@ -78,6 +79,7 @@ void autonomous() {}
  */
 
 void opcontrol() {
+	okapi::Motor motors[] = {leftFront, leftMid, leftBack, rightMid, rightBack, rightFront, intake}; //TODO: add slapper once i get that code
 	okapi::Controller controller;
 	okapi::Rate rate;
 	int intakeState = 0;
@@ -88,6 +90,8 @@ void opcontrol() {
 		if (l1.changed() == true) {
 			intakeStep(intake, intakeState);
 		}
+
+		overheat(motors, controller);
 
 		rate.delay(100_Hz);
 	}
