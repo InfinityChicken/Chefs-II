@@ -16,11 +16,13 @@ std::shared_ptr<okapi::ChassisController> drivetrain = okapi::ChassisControllerB
 .withSensors(leftMid.getEncoder(), rightMid.getEncoder())
 .build();
 
-void drive(okapi::Controller controller, std::shared_ptr<okapi::ChassisController> drivetrain) {
-    double speed = controller.getAnalog(okapi::ControllerAnalog::leftY); //left joystick
-    double rotate = controller.getAnalog(okapi::ControllerAnalog::rightX); //right joystick
+void drive(okapi::Controller controller, std::shared_ptr<okapi::ChassisController> drivetrain, bool driveDisabled) {
+    if(driveDisabled != true) {
+        double speed = controller.getAnalog(okapi::ControllerAnalog::leftY); //left joystick
+        double rotate = controller.getAnalog(okapi::ControllerAnalog::rightX); //right joystick
     
-    drivetrain->getModel()->arcade(speed, rotate); //drive power
+        drivetrain->getModel()->arcade(speed, rotate); //drive power
+    }
 }
 
 // void coastHold(std::shared_ptr<okapi::ChassisController> drivetrain) { TODO: find out the difference between coast, hold, and brake and figure out how to do that using a drivetrain (ask does)

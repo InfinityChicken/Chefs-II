@@ -6,6 +6,8 @@
 #include<string>
 using namespace std;
 
-void overheat(okapi::Motor motors[8], okapi::Controller controller);
+extern okapi::ControllerButton x;
+
+void overheat(okapi::Motor motors[8], okapi::Controller controller, okapi::ControllerButton x);
 
 #endif

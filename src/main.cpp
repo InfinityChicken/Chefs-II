@@ -89,15 +89,14 @@ void opcontrol() {
 	bool hold = false;
 
 	while(true) {
-		if(driveDisabled != true) { //if driver hijacks drive inputs for something else drive is deactivated
-			drive(controller, drivetrain);
-		}
+		drive(controller, drivetrain, driveDisabled);
+
 		intakeStep(intake, l1, l2, hold);
 
 		slapperStep(slapper, slapperState, r1, driveDisabled, controller);
 
-		overheat(motors, controller);
-		
+		overheat(motors, controller, x);
+
 		rate.delay(100_Hz);
 	}
 }
