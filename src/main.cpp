@@ -80,7 +80,7 @@ void autonomous() {}
  */
 
 void opcontrol() {
-	okapi::Motor motors[] = {leftFront, leftMid, leftBack, rightMid, rightBack, rightFront, intake}; //TODO: add slapper once i get that code
+	okapi::Motor motors[] = {leftFront, leftMid, leftBack, rightMid, rightBack, rightFront, intake, slapper};
 	okapi::Controller controller;
 	okapi::Rate rate;
 	int intakeState = 0;
