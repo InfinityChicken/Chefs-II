@@ -16,7 +16,7 @@ std::shared_ptr<okapi::ChassisController> drivetrain = okapi::ChassisControllerB
 .withSensors(leftMid.getEncoder(), rightMid.getEncoder())
 .build();
 
-void drive(okapi::Controller controller, std::shared_ptr<okapi::ChassisController> drivetrain, bool driveDisabled) {
+void drive(okapi::Controller &controller, std::shared_ptr<okapi::ChassisController> &drivetrain, bool &driveDisabled) {
     if(driveDisabled != true) {
         double speed = controller.getAnalog(okapi::ControllerAnalog::leftY); //left joystick
         double rotate = controller.getAnalog(okapi::ControllerAnalog::rightX); //right joystick

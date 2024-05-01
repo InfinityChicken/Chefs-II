@@ -80,7 +80,7 @@ void autonomous() {}
  */
 
 void opcontrol() {
-	okapi::Motor motors[] = {leftFront, leftMid, leftBack, rightMid, rightBack, rightFront, intake, slapper};
+	// okapi::Motor motors[] = {leftFront, leftMid, leftBack, rightMid, rightBack, rightFront, intake, slapper};
 	okapi::Controller controller;
 	okapi::Rate rate;
 	int intakeState = 0;
@@ -95,7 +95,7 @@ void opcontrol() {
 
 		slapperStep(slapper, slapperState, r1, driveDisabled, controller);
 
-		overheat(motors, controller, x);
+		// overheat(motors, controller, x);
 
 		rate.delay(100_Hz);
 	}

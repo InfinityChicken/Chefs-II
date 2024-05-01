@@ -15,7 +15,7 @@ extern okapi::Motor rightBack;
 //TODO: coast hold toggle; r2 and coastHold will be used for that
 extern std::shared_ptr<okapi::ChassisController> drivetrain;
 
-void drive(okapi::Controller controller, std::shared_ptr<okapi::ChassisController> drivetrain, bool driveDisabled);
+void drive(okapi::Controller &controller, std::shared_ptr<okapi::ChassisController> &drivetrain, bool &driveDisabled);
 
 // void coastHold(std::shared_ptr<okapi::ChassisController> drivetrain);
 

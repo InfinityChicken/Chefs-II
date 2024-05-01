@@ -4,7 +4,7 @@ okapi::Motor intake = okapi::Motor(7);
 okapi::ControllerButton l1 = okapi::ControllerButton(okapi::ControllerDigital::L1, false);
 okapi::ControllerButton l2 = okapi::ControllerButton(okapi::ControllerDigital::L2, false);
 
-void intakeStep(okapi::Motor motor, okapi::ControllerButton l1, okapi::ControllerButton l2, bool &hold) { //goal: l1 holds for intake, l2 holds for intake, l1+l2 toggle for a low rpm triball hold
+void intakeStep(okapi::Motor &motor, okapi::ControllerButton &l1, okapi::ControllerButton &l2, bool &hold) { //goal: l1 holds for intake, l2 holds for intake, l1+l2 toggle for a low rpm triball hold
     if ( ( (!l1.isPressed() || !l2.isPressed()) && hold ) == false) { //if nothing is pressed while hold is disabled, the motor turns off
         motor.moveVelocity(0);
     } 

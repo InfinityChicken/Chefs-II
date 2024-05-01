@@ -8,6 +8,6 @@ using namespace std;
 
 extern okapi::ControllerButton x;
 
-void overheat(okapi::Motor motors[8], okapi::Controller controller, okapi::ControllerButton x);
+void overheat(okapi::Motor motors[8], okapi::Controller &controller, okapi::ControllerButton &x);
 
 #endif
