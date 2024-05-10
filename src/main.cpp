@@ -95,7 +95,7 @@ void opcontrol() {
 
 		slapperStep(slapper, slapperState, r1, driveDisabled, controller);
 
-		// overheat(motors, controller, x);
+		// overheat(motors, controller, x); we are NOT running allat
 
 		rate.delay(100_Hz);
 	}

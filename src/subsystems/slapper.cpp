@@ -18,7 +18,7 @@ void slapperStep(okapi::Motor &motor, int &slapperState, okapi::ControllerButton
         driveDisabled = true; //the input to the drive is turned off
         motor.moveVelocity(200 * (1 - abs ( controller.getAnalog(okapi::ControllerAnalog::rightY) ) ) ); //and the motor gets constantly updated with speed
         //at neutral, the motor will move at max speed (200*(1-0) rpm), but at max delay (joystick throttled), the motor will move at (200*(1-1) rpm).
-        //assuming that getAnalog returns a value from 0-1, if it doesn't this code is cooked TODO: ask does if getAnalog returns a value from 0-1
+        //assuming that getAnalog returns a value from 0-1, if it doesn't this code is cooked
     }
 
     //should i be proud or disappointed in this

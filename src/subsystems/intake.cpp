@@ -4,8 +4,8 @@ okapi::Motor intake = okapi::Motor(7);
 okapi::ControllerButton l1 = okapi::ControllerButton(okapi::ControllerDigital::L1, false);
 okapi::ControllerButton l2 = okapi::ControllerButton(okapi::ControllerDigital::L2, false);
 
-void intakeStep(okapi::Motor &motor, okapi::ControllerButton &l1, okapi::ControllerButton &l2, bool &hold) { //goal: l1 holds for intake, l2 holds for intake, l1+l2 toggle for a low rpm triball hold
-    if ( ( (!l1.isPressed() || !l2.isPressed()) && hold ) == false) { //if nothing is pressed while hold is disabled, the motor turns off
+void intakeStep(okapi::Motor &motor, okapi::ControllerButton &l1, okapi::ControllerButton &l2, bool &hold) { //goal: l1 holds for intake, l2 holds for outtake, l1+l2 toggle intake
+    if (!l1.isPressed() && !l2.isPressed() && (hold == false)) { //if nothing is pressed while hold is disabled, the motor turns off
         motor.moveVelocity(0);
     } 
     
@@ -20,18 +20,18 @@ void intakeStep(okapi::Motor &motor, okapi::ControllerButton &l1, okapi::Control
     } 
     
     else if ((l1.isPressed() && l2.changedToPressed()) || (l1.changedToPressed() && l2.isPressed())) { //if both of them are pressed the intake runs at a low velocity to hold a triball
-            motor.moveVelocity(100); //only runs on the tick at which one of them is pressed while the other one is also pressed
-            hold == true;
+        motor.moveVelocity(200); //only runs on the tick at which one of them is pressed while the other one is also pressed
+        hold == true;
     } //please congratulate me for this one
 }
 
 /*
 example scenario: 
-l1 is pressed down, so the first if statement runs for one tick and the motor intakes. 
+l1 is pressed down, so the second if statement runs for one tick and the motor intakes. 
 l2 is then pressed down, so the third if statement runs for one tick and the motor toggles to hold.
-l1 is released and nothing runs.
-l2 is released and nothing runs.
+l1 is released and nothing runs --- nothing was changed to pressed in the last tick.
+l2 is released and nothing runs --- nothing was changed to pressed in the last tick.
 l2 is pressed down, so the second if statement runs for one tick and the motor outtakes and turns off hold.
-l2 is released and the fourth if statement runs, turning off the intake.
-the fourth if statement continues to run until another intake button is pressed.
+l2 is released and the first if statement runs, turning off the intake.
+the first if statement continues to run until another intake button is pressed.
 */
