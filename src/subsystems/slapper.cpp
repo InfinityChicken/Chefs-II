@@ -3,7 +3,7 @@
 okapi::Motor slapper = okapi::Motor(8); //TODO: find proper motor direction
 okapi::ControllerButton r1 = okapi::ControllerButton(okapi::ControllerDigital::R1, false);
 
-void slapperStep(okapi::Motor &motor, int &slapperState, okapi::ControllerButton &r1, bool &driveDisabled, okapi::Controller &controller) {
+void slapperStep(okapi::Motor &motor, int &slapperState, okapi::ControllerButton r1, bool &driveDisabled, okapi::Controller &controller) {
     if (r1.changed() == true) {
         slapperState++;
         if (slapperState == 3) {
