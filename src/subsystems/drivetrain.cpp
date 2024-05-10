@@ -10,12 +10,11 @@ okapi::Motor rightBack = okapi::Motor(-6);
 
 okapi::ControllerButton r2 = okapi::ControllerButton(okapi::ControllerDigital::R2, false);
 
-std::shared_ptr<okapi::OdomChassisController> drivetrain = okapi::ChassisControllerBuilder()
+std::shared_ptr<okapi::ChassisController> drivetrain = okapi::ChassisControllerBuilder()
 .withMotors({leftBack, leftMid, leftFront}, {rightBack, rightMid, rightFront})
 .withDimensions(okapi::AbstractMotor::gearset::blue, {{1_in, 1_in}, okapi::imev5BlueTPR}) //TODO: find actual drive measurements
 .withSensors(leftMid.getEncoder(), rightMid.getEncoder())
-.withOdometry()
-.buildOdometry();
+.build();
 
 void drive(okapi::Controller &controller, std::shared_ptr<okapi::ChassisController> &drivetrain, bool &driveDisabled) {
     if(driveDisabled != true) {
