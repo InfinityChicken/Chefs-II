@@ -86,12 +86,11 @@ void opcontrol() {
 	int intakeState = 0;
 	int slapperState = 0;
 	bool driveDisabled = false;
-	bool hold = false;
 
 	while(true) {
 		drive(controller, drivetrain, driveDisabled);
 
-		intakeStep(intake, l1, l2, hold);
+		intakeStep(intake, l1, l2);
 
 		slapperStep(slapper, slapperState, r1, driveDisabled, controller);
 
