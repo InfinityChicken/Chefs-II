@@ -1,23 +1,25 @@
 #include "include/auton/util.hpp"
 
+okapi::IterativePosPIDController drivePID = okapi::IterativeControllerFactory::posPID(0, 0, 0);
+
+okapi::IterativePosPIDController turnPID = okapi::IterativeControllerFactory::posPID(0, 0, 0);
+
 void driveDistance (double distToTarget) {
 
     // if(abs(distToTarget) <=0.01) {return;} TODO: isn't this unnecessary?
     
     okapi::Rate rate;
-
-    okapi::IterativePosPIDController drivePID = okapi::IterativeControllerFactory::posPID(0, 0, 0); //pid object
     
     drivePID.setTarget(distToTarget); //set pid object target
 
-    double originX = drivetrain->getState().x.convert(okapi::foot); //get origin point
-    double originY = drivetrain->getState().y.convert(okapi::foot);
+    double originX = drivetrain->getState().x.convert(okapi::inch); //get origin point
+    double originY = drivetrain->getState().y.convert(okapi::inch);
 
     double displacement = 0; //set distance traveled object
 
     while (abs(distToTarget-displacement) >= 0.083 || abs(leftFront.getActualVelocity()) > 8) { //TODO: why is this an or statement lmao. also check the distToTarget/displacement condition - 0.083=1inch
-        double currX = drivetrain->getState().x.convert(okapi::foot);
-        double currY = drivetrain->getState().y.convert(okapi::foot);
+        double currX = drivetrain->getState().x.convert(okapi::inch);
+        double currY = drivetrain->getState().y.convert(okapi::inch);
 
         double diffX = currX - originX;
         double diffY = currY - originY;
@@ -28,7 +30,7 @@ void driveDistance (double distToTarget) {
         //     displacement = -displacement;
         // } TODO: what is this.
 
-        double vel = drivePID.step((displacement*36) / 60); //change to reflect gear ratios
+        double vel = drivePID.step(displacement * 36 / 60); //change to reflect gear ratios
 
         drivetrain -> getModel() -> tank(vel, vel);
 
@@ -46,10 +48,10 @@ double fixAngle(double angle) { //TODO: i think this is a very roundabout way to
     } else if (angle > 0) {
         angle = fmod(angle, 360); //makes the angle 0<x<360
     } else {
-        angle = fmod(-angle, 360) * -1 +360; //finds the explementary NEGATIVE angle, makes it -360<x<0, then makes it negative again to find the positive equivalent angle 
+        angle = fmod(-angle, 360) * -1 +360; //finds the explementary POSTIIVE angle, makes it 0<x<360, then makes it negative again to find the positive equivalent angle 
     }
 
-    return (angle <= 180) ? angle : angle - 360; //fixes angle into range from 180 to -180. i think. it's 12:30 i have one more day to finish i am cooked beyond belief
+    return (angle <= 180) ? angle : angle - 360; //fixes angle into range from 180 to -180. i think.
 
     // double decimal = angle - (int)angle;
     // int integer = (int)angle;
@@ -67,14 +69,21 @@ void turnDegrees (double targetAngle) {
 
     okapi::Rate rate;
 
-    okapi::IterativePosPIDController turnPID = okapi::IterativeControllerFactory::posPID(0, 0, 0);
+    // double displacement = fixAngle(imu.controllerGet() - targetAngle); //TODO: why initialize originAngle here? is it bc you need to set the imu start pos 
 
-    double displacement = fixAngle(imu.controllerGet() - targetAngle); //TODO: why initialize originAngle here? is it bc you need to set the imu start pos 
+    double originAngle = -fixAngle(targetAngle);
+
+    imu.reset(originAngle); //sets origin for the imu to the negative of the target angle so that it targets 0
 
     turnPID.setTarget(0);
+
+    double displacement = 3; //very bad coding practice lmao
     
     while(displacement >= 3 || abs(leftFront.getActualVelocity()) > 15) { //TODO: value 15rpm (motor) here may have to be tuned, so may 3deg
-        displacement = fixAngle(imu.controllerGet() - targetAngle);
+        
+        double currAngle = fixAngle(imu.controllerGet());
+
+        displacement = fixAngle(currAngle-originAngle);
 
         // if (displacement >= 190) { //TODO: why does this exist
         //     break;
@@ -82,8 +91,13 @@ void turnDegrees (double targetAngle) {
 
         double rpm = turnPID.step(displacement * 36 / 60); //TODO: gear ratios necessary here?
 
-        drivetrain->getModel()->tank(-rpm, rpm); //TODO: is the negatisation right
+        drivetrain->getModel()->tank(rpm, -rpm); //TODO: is the negatisation right
 
         rate.delay(100_Hz);
+        
     }
+
+    imu.reset();
+
+    drivetrain->getModel()->tank(0,0);
 }

@@ -8,7 +8,9 @@ okapi::Motor rightFront = okapi::Motor(-4);
 okapi::Motor rightMid = okapi::Motor(-5);
 okapi::Motor rightBack = okapi::Motor(-6);
 
-okapi::ControllerButton r2 = okapi::ControllerButton(okapi::ControllerDigital::R2, false);
+okapi::Controller controller = okapi::Controller();
+
+// okapi::ControllerButton r2 = okapi::ControllerButton(okapi::ControllerDigital::R2, false);
 
 std::shared_ptr<okapi::OdomChassisController> drivetrain = okapi::ChassisControllerBuilder()
 .withMotors({leftBack, leftMid, leftFront}, {rightBack, rightMid, rightFront})
@@ -17,7 +19,7 @@ std::shared_ptr<okapi::OdomChassisController> drivetrain = okapi::ChassisControl
 .withOdometry()
 .buildOdometry();
 
-void drive(okapi::Controller &controller, std::shared_ptr<okapi::OdomChassisController> &drivetrain, bool &driveDisabled) {
+void drive(bool &driveDisabled) {
     if(driveDisabled != true) {
         double speed = controller.getAnalog(okapi::ControllerAnalog::leftY); //left joystick
         double rotate = controller.getAnalog(okapi::ControllerAnalog::rightX); //right joystick
