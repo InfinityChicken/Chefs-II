@@ -4,18 +4,18 @@ okapi::Motor intake = okapi::Motor(7);
 okapi::ControllerButton l1 = okapi::ControllerButton(okapi::ControllerDigital::L1, false);
 okapi::ControllerButton l2 = okapi::ControllerButton(okapi::ControllerDigital::L2, false);
 
-void intakeStep(okapi::Motor &motor, okapi::ControllerButton &l1, okapi::ControllerButton &l2) { //goal: l1 holds for intake, l2 holds for outtake, l1+l2 toggle intake
+void intakeStep() { //goal: l1 holds for intake, l2 holds for outtake, l1+l2 toggle intake
     if ((!l1.isPressed() && !l2.isPressed()) || (l1.isPressed() && l2.isPressed())) { //if nothing is pressed while hold is disabled, the motor turns off
-        motor.moveVelocity(0);
+        intake.moveVelocity(0);
     } 
     
-    else if (l2.isPressed()) { //if l1 is held and l2 isn't held the intake intakes
-        motor.moveVelocity(200); //only runs on the tick at which l1 is pressed
+    else if (l1.isPressed()) { //if l1 is held and l2 isn't held the intake intakes
+        intake.moveVelocity(200); //only runs on the tick at which l1 is pressed
  //also tells the first if statement that hold is disabled
     } 
     
-    else if (l1.isPressed()) { //if l2 is held and l1 isn't the intake outakes
-        motor.moveVelocity(-200); //only runs on the tick at which l2 is pressed
+    else if (l2.isPressed()) { //if l2 is held and l1 isn't the intake outakes
+        intake.moveVelocity(-200); //only runs on the tick at which l2 is pressed
 //also tells the first if statement that hold is disabled
     } 
 }
