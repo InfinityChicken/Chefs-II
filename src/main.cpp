@@ -69,7 +69,6 @@ void autonomous() {
 
 void opcontrol() {
 	okapi::Rate rate;
-	int intakeState = 0;
 	int slapperState = 0;
 	bool driveDisabled = false;
 
@@ -85,3 +84,7 @@ void opcontrol() {
 		rate.delay(100_Hz);
 	}
 }
+
+// public static void main(String[] args) {
+// 	System.out.println("Will the chef cook or will he be cooked?");
+// }

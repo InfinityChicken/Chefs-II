@@ -52,17 +52,6 @@ double fixAngle(double angle) { //TODO: i think this is a very roundabout way to
     }
 
     return (angle <= 180) ? angle : angle - 360; //fixes angle into range from 180 to -180. i think.
-
-    // double decimal = angle - (int)angle;
-    // int integer = (int)angle;
-
-    // if (integer>0) {
-    //     integer = integer % 360; //makes the angle less than 360
-    // } else {
-    //     integer = (-integer % 360) * -1 +360; //makes the angle positive and less than 360 then makes it negative again to find the positive equivalent angle 
-    // }
-
-    // angle = decimal + integer;
 }
 
 void turnDegrees (double targetAngle) {
@@ -71,32 +60,31 @@ void turnDegrees (double targetAngle) {
 
     // double displacement = fixAngle(imu.controllerGet() - targetAngle); //TODO: why initialize originAngle here? is it bc you need to set the imu start pos 
 
-    double originAngle = -fixAngle(targetAngle);
+    targetAngle = fixAngle(targetAngle);
+
+    double originAngle = -targetAngle;
 
     imu.reset(originAngle); //sets origin for the imu to the negative of the target angle so that it targets 0
 
     turnPID.setTarget(0);
 
-    double displacement = 3; //very bad coding practice lmao
+    double displacement; //very bad coding practice lmao
     
-    while(displacement >= 3 || abs(leftFront.getActualVelocity()) > 15) { //TODO: value 15rpm (motor) here may have to be tuned, so may 3deg
+    while(abs(targetAngle-displacement) >= 3 || abs(leftFront.getActualVelocity()) > 15) { //TODO: value 15rpm (motor) here may have to be tuned, so may 3deg
         
         double currAngle = fixAngle(imu.controllerGet());
 
         displacement = fixAngle(currAngle-originAngle);
 
-        // if (displacement >= 190) { //TODO: why does this exist
-        //     break;
-        // }
+        double vel = turnPID.step(displacement * 36 / 60); //TODO: gear ratios necessary here?
 
-        double rpm = turnPID.step(displacement * 36 / 60); //TODO: gear ratios necessary here?
-
-        drivetrain->getModel()->tank(rpm, -rpm); //TODO: is the negatisation right
+        drivetrain->getModel()->tank(vel, -vel); //TODO: is the negatisation right 
 
         rate.delay(100_Hz);
         
     }
 
+    turnPID.reset();
     imu.reset();
 
     drivetrain->getModel()->tank(0,0);
