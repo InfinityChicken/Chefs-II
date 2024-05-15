@@ -15,7 +15,7 @@ void driveDistance (double distToTarget) {
     double originX = drivetrain->getState().x.convert(okapi::inch); //get origin point
     double originY = drivetrain->getState().y.convert(okapi::inch);
 
-    double displacement = 0; //set distance traveled object
+    double displacement = 0;
 
     while (abs(distToTarget-displacement) >= 0.083 || abs(leftFront.getActualVelocity()) > 8) { //TODO: why is this an or statement lmao. also check the distToTarget/displacement condition - 0.083=1inch
         double currX = drivetrain->getState().x.convert(okapi::inch);
@@ -76,9 +76,9 @@ void turnDegrees (double targetAngle) {
 
         displacement = fixAngle(currAngle-originAngle);
 
-        double vel = turnPID.step(displacement * 36 / 60); //TODO: gear ratios necessary here?
+        double vel = turnPID.step(displacement); //TODO: gear ratios necessary here?
 
-        drivetrain->getModel()->tank(vel, -vel); //TODO: is the negatisation right 
+        drivetrain->getModel()->tank(0.9*vel, 0.9*-vel); //TODO: is the negatisation right 
 
         rate.delay(100_Hz);
         
