@@ -1,6 +1,6 @@
 #include "subsystems/intake.hpp"
 
-okapi::Motor intake = okapi::Motor(7);
+okapi::Motor intake = okapi::Motor(8);
 okapi::ControllerButton l1 = okapi::ControllerButton(okapi::ControllerDigital::L1, false);
 okapi::ControllerButton l2 = okapi::ControllerButton(okapi::ControllerDigital::L2, false);
 

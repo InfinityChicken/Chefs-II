@@ -1,12 +1,14 @@
 #include "subsystems/drivetrain.hpp"
 using namespace okapi::literals;
 
-okapi::Motor leftFront = okapi::Motor(3); //TODO: motor groups, gear ratios, extra motor groups?
-okapi::Motor leftMid = okapi::Motor(2);
-okapi::Motor leftBack = okapi::Motor(1);
-okapi::Motor rightFront = okapi::Motor(-6);
-okapi::Motor rightMid = okapi::Motor(-5);
-okapi::Motor rightBack = okapi::Motor(-4);
+okapi::Motor leftFront = okapi::Motor(-7); //TODO: motor groups, gear ratios, extra motor groups?
+okapi::Motor leftMid = okapi::Motor(-6);
+okapi::Motor leftBack = okapi::Motor(-5);
+okapi::Motor rightFront = okapi::Motor(4);
+okapi::Motor rightMid = okapi::Motor(2);
+okapi::Motor rightBack = okapi::Motor(1);
+//FROM THE BACK PERSPECTIVE
+
 
 okapi::Controller controller = okapi::Controller();
 
