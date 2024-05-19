@@ -3,6 +3,9 @@
 #include "subsystems/intake.hpp"
 #include "subsystems/slapper.hpp"
 #include "subsystems/messaging.hpp"
+#include "auton/util.hpp"
+#include "auton/paths.hpp"
+
 using namespace okapi::literals;
 
 /**
@@ -68,20 +71,35 @@ void autonomous() {
 }
 
 void opcontrol() {
+	// okapi::ControllerButton x = okapi::ControllerButton(okapi::ControllerDigital::X); //TODO: TESTING OBJECTS REMOVE LATER!!!
+	// okapi::ControllerButton y = okapi::ControllerButton(okapi::ControllerDigital::Y); //TODO: TESTING OBJECTS REMOVE LATER!!!
 	okapi::Rate rate;
 	int slapperState = 0;
 	bool driveDisabled = false;
+	bool coast = true;
+
+	drivetrain->getModel()->setBrakeMode(okapi::AbstractMotor::brakeMode::coast);
 
 	while(true) {
+		coastHold(coast);
+
 		drive(driveDisabled);
 
 		intakeStep();
 
 		slapperStep(slapperState, driveDisabled);
 
-		// overheat(motors, controller, x); we are NOT running allat
+		// overheat(motors, controller, x);
 
 		rate.delay(100_Hz);
+
+		// if(x.changedToPressed()) {
+		// 	driveDistance(12);
+		// }
+
+		// if(y.changedToPressed()) {
+		// 	turnDegrees(90);
+		// }
 	}
 }
 

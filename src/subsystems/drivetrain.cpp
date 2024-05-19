@@ -1,7 +1,7 @@
 #include "subsystems/drivetrain.hpp"
 using namespace okapi::literals;
 
-okapi::Motor leftFront = okapi::Motor(-7); //TODO: motor groups, gear ratios, extra motor groups?
+okapi::Motor leftFront = okapi::Motor(-7); 
 okapi::Motor leftMid = okapi::Motor(-6);
 okapi::Motor leftBack = okapi::Motor(-5);
 okapi::Motor rightFront = okapi::Motor(4);
@@ -9,10 +9,9 @@ okapi::Motor rightMid = okapi::Motor(2);
 okapi::Motor rightBack = okapi::Motor(1);
 //FROM THE BACK PERSPECTIVE
 
-
 okapi::Controller controller = okapi::Controller();
 
-// okapi::ControllerButton r2 = okapi::ControllerButton(okapi::ControllerDigital::R2, false);
+okapi::ControllerButton r2 = okapi::ControllerButton(okapi::ControllerDigital::R2, false);
 
 std::shared_ptr<okapi::OdomChassisController> drivetrain = okapi::ChassisControllerBuilder()
 .withMotors({leftBack, leftMid, leftFront}, {rightBack, rightMid, rightFront})
@@ -30,6 +29,9 @@ void drive(bool &driveDisabled) {
     }
 }
 
-// void coastHold(std::shared_ptr<okapi::ChassisController> drivetrain) { TODO: find out the difference between coast, hold, and brake and figure out how to do that using a drivetrain (ask does)
-//     drivetrain->
-// }
+void coastHold(bool &coast) {
+    if(r2.changedToPressed()) {
+        if(coast) { drivetrain->getModel()->setBrakeMode(okapi::AbstractMotor::brakeMode::hold); } 
+        else { drivetrain->getModel()->setBrakeMode(okapi::AbstractMotor::brakeMode::coast); } 
+    }
+}

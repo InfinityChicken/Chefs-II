@@ -11,9 +11,21 @@ void farSimple() {
     turnDegrees(90);
     driveDistance(12); //score preload
     turnDegrees(180);
-    driveDistance(15); //intake iso triball
+    driveDistance(15); //intake close triball
     turnDegrees(180);
-    driveDistance(15); //score iso triball
+    driveDistance(15); //score close triball
+}
+
+void closeSimple() {
+    turnDegrees(-45);
+    driveDistance(32);
+    turnDegrees(45);
+    driveDistance(6);
+    driveDistance(-6);
+    turnDegrees(-45);
+    driveDistance(-32);
+    turnDegrees(-45);
+    driveDistance(-36);
 }
 
 void farComplex() {
@@ -34,7 +46,7 @@ void farComplex() {
     turnDegrees(75.964); //score otu and preload triballs
     driveDistance(49.476);
 
-    //TODO: finish
+    //TODO: DO NOT FOCUS ON COMPLEX ROUTE
 }
 
 //aot reference???

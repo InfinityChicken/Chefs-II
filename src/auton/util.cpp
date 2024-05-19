@@ -15,9 +15,9 @@ void driveDistance (double distToTarget) {
     double originX = drivetrain->getState().x.convert(okapi::inch); //get origin point
     double originY = drivetrain->getState().y.convert(okapi::inch);
 
-    double displacement = 0;
+    double displacement = 1;
 
-    while (abs(distToTarget-displacement) >= 0.083 || abs(leftFront.getActualVelocity()) > 8) { //TODO: why is this an or statement lmao. also check the distToTarget/displacement condition - 0.083=1inch
+    while (abs(distToTarget-displacement) >= 0.1 || abs(leftFront.getActualVelocity()) > 8) { 
         double currX = drivetrain->getState().x.convert(okapi::inch);
         double currY = drivetrain->getState().y.convert(okapi::inch);
 
@@ -68,7 +68,7 @@ void turnDegrees (double targetAngle) {
 
     turnPID.setTarget(0);
 
-    double displacement; //very bad coding practice lmao
+    double displacement = 3;
     
     while(abs(targetAngle-displacement) >= 3 || abs(leftFront.getActualVelocity()) > 15) { //TODO: value 15rpm (motor) here may have to be tuned, so may 3deg
         
